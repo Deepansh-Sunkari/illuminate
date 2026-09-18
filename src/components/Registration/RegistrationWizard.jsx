@@ -21,10 +21,10 @@ export const RegistrationWizard = () => {
   const [formData, setFormData] = useState({
     name: '',
     roll: '',
-    college: 'Raghu Engineering College',
+    college: '',
     branch: '',
     year: '',
-    city: 'Visakhapatnam',
+    location: '',
     phone: '',
     email: '',
   });
@@ -77,10 +77,10 @@ export const RegistrationWizard = () => {
     setFormData({
       name: '',
       roll: '',
-      college: 'Raghu Engineering College',
+      college: '',
       branch: '',
       year: '',
-      city: 'Visakhapatnam',
+      location: '',
       phone: '',
       email: '',
     });

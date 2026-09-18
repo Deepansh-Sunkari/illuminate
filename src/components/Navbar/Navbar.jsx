@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, ArrowRight } from 'lucide-react';
 import SITE_DATA from '../../data/site';
-import EVENT_DATA from '../../data/event';
 import MobileMenu from './MobileMenu';
 import IlluminateLogo from '../ui/IlluminateLogo';
 
 export const Navbar = ({ onRegisterClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,21 +19,11 @@ export const Navbar = ({ onRegisterClick }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleScrollTo = (e, href) => {
-    e.preventDefault();
-    if (href.startsWith('#')) {
-      const el = document.querySelector(href);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          isScrolled
+          isScrolled || location.pathname !== '/'
             ? 'py-3 bg-[#070314]/85 backdrop-blur-xl border-b border-purple-500/20 shadow-lg shadow-black/40'
             : 'py-4 sm:py-5 bg-transparent border-b border-transparent'
         }`}
@@ -40,6 +31,15 @@ export const Navbar = ({ onRegisterClick }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Brand Group (Logos) */}
           <div className="flex items-center gap-2 sm:gap-4">
+            {/* Illuminate Logo */}
+            <Link to="/" className="flex items-center group mr-2 sm:mr-4">
+              <img 
+                src="/assets/logos/illuminate_logo_crop2.png" 
+                alt="Illuminate" 
+                className="h-6 sm:h-7 w-auto object-contain"
+              />
+            </Link>
+
             {/* Raghu Engg College Logo */}
             <a
               href="https://raghuenggcollege.com"
@@ -74,34 +74,24 @@ export const Navbar = ({ onRegisterClick }) => {
                 className="h-5 sm:h-6 w-auto object-contain"
               />
             </a>
-
-            {/* Divider */}
-            <span className="text-purple-500/40 font-mono text-xs hidden sm:inline select-none">
-              |
-            </span>
-
-            {/* Illuminate Plain Brand Link with Animated Flame 'i' */}
-            <a
-              href="#hero"
-              onClick={(e) => handleScrollTo(e, '#hero')}
-              className="flex items-center focus:outline-none group transition-transform hover:scale-105"
-              title="Illuminate 2026 Home"
-            >
-              <IlluminateLogo size="nav" />
-            </a>
           </div>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-6">
+            <Link
+              to="/"
+              className={`text-xs font-semibold tracking-wide uppercase transition-colors relative py-1 focus:outline-none ${location.pathname === '/' ? 'text-white' : 'text-slate-300 hover:text-white'}`}
+            >
+              Home
+            </Link>
             {SITE_DATA.navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
-                onClick={(e) => handleScrollTo(e, link.href)}
-                className="text-xs font-semibold tracking-wide uppercase text-slate-300 hover:text-white transition-colors relative py-1 focus:outline-none"
+                to={link.href}
+                className={`text-xs font-semibold tracking-wide uppercase transition-colors relative py-1 focus:outline-none ${location.pathname === link.href ? 'text-purple-300 drop-shadow-md' : 'text-slate-300 hover:text-white'}`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -109,14 +99,7 @@ export const Navbar = ({ onRegisterClick }) => {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => {
-                if (onRegisterClick) {
-                  onRegisterClick();
-                } else {
-                  const el = document.querySelector('#register');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
+              onClick={onRegisterClick}
               className="hidden sm:inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 border border-purple-400/40 shadow-glow-sm hover:shadow-glow-md transition-all active:scale-[0.98]"
             >
               <span>Register</span>

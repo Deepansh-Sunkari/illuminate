@@ -4,10 +4,11 @@
 
 export const SITE_DATA = {
   navLinks: [
-    { label: "About", href: "#about" },
-    { label: "Register", href: "#register" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Contact", href: "#contact" }
+    { label: "About", href: "/about" },
+    { label: "Speaker", href: "/speaker" },
+    { label: "Register", href: "/register" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Contact", href: "/contact" }
   ],
   socials: [
     { name: "Instagram", url: "https://instagram.com", icon: "Instagram" },

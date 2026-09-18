@@ -1,11 +1,23 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
 /**
- * Animated Stat Counter with IntersectionObserver
+ * Animated Stat Counter with IntersectionObserver and Number Rolling
  */
 export const StatCard = ({ value, label, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef(null);
+  const count = useMotionValue(0);
+
+  // Parse target number and suffix (e.g. "100K+" -> 100, "K+")
+  const numStr = String(value).replace(/[^0-9.]/g, '');
+  const suffix = String(value).replace(/[0-9.]/g, '');
+  const targetNumber = parseFloat(numStr) || 0;
+
+  // Format the rolling number back to an integer string with the suffix
+  const displayValue = useTransform(count, (latest) => {
+    return Math.floor(latest) + suffix;
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -22,6 +34,17 @@ export const StatCard = ({ value, label, delay = 0 }) => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (isVisible) {
+      setTimeout(() => {
+        animate(count, targetNumber, {
+          duration: 2,
+          ease: "easeOut"
+        });
+      }, delay);
+    }
+  }, [isVisible, targetNumber, delay, count]);
+
   return (
     <div
       ref={cardRef}
@@ -30,9 +53,9 @@ export const StatCard = ({ value, label, delay = 0 }) => {
       }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-violet-300 to-electric-neon tracking-tight">
-        {value}
-      </div>
+      <motion.div className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-violet-300 to-electric-neon tracking-tight drop-shadow-md">
+        {displayValue}
+      </motion.div>
       <div className="text-xs sm:text-sm text-purple-300/90 mt-2 uppercase font-semibold tracking-wider">
         {label}
       </div>

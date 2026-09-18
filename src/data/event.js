@@ -17,24 +17,24 @@ export const EVENT_DATA = {
     partnerUrl: "https://www.ecell.in"
   },
   dates: {
-    display: "[ADD EVENT DATE]",
+    display: "October 9 & 10, 2026",
     time: "09:30 AM - 04:00 PM",
     duration: "2-Day Intensive Masterclass",
     earlyBirdDeadline: "[ADD EARLY BIRD DEADLINE]"
   },
   venue: {
-    name: "Seminar Hall, REC Visakhapatnam",
+    name: "Raghu Engineering College",
     address: "Raghu Engineering College, Dakamarri, Bheemunipatnam Mandal, Visakhapatnam, Andhra Pradesh 531162",
     mapUrl: "https://maps.google.com/?q=Raghu+Engineering+College+Visakhapatnam"
   },
   pricing: {
     currency: "₹",
-    earlyBirdPrice: "[ADD PRICE]",
+    earlyBirdPrice: "₹699",
     regularPrice: "[ADD REGULAR PRICE]",
     includes: ["Official Certificate", "Delegate Kit & Manual", "Founder Masterclass", "Lunch & Refreshments"]
   },
   payment: {
-    upiId: "[ADD UPI ID]",
+    upiId: "9391183459@ybl",
     qrCodeImage: "/assets/payment/qr-code.png",
     payeeName: "Illuminate REC",
     instructions: "Scan the QR code using any UPI app (PhonePe, Google Pay, Paytm, BHIM) or pay via the UPI ID. Once completed, enter the 12-digit UTR and upload your payment screenshot."

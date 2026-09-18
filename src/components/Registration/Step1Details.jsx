@@ -112,7 +112,7 @@ export const Step1Details = ({ formData, updateFormData, onNext }) => {
             id="college"
             type="text"
             required
-            value={formData.college || 'Raghu Engineering College'}
+            value={formData.college || ''}
             onChange={(e) => handleChange('college', e.target.value)}
             placeholder="College Name"
             className={`w-full min-h-[48px] bg-[#0d0724] border rounded-xl px-4 py-3 text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:ring-1 transition-all ${
@@ -190,20 +190,20 @@ export const Step1Details = ({ formData, updateFormData, onNext }) => {
         </div>
       </div>
 
-      {/* City / Campus Location */}
+      {/* Location */}
       <div>
         <label
-          htmlFor="city"
+          htmlFor="location"
           className="block text-xs font-mono uppercase tracking-wider text-purple-300 font-semibold mb-1.5"
         >
-          City / Campus Location
+          Your Location / City
         </label>
         <input
-          id="city"
+          id="location"
           type="text"
-          value={formData.city || 'Visakhapatnam'}
-          onChange={(e) => handleChange('city', e.target.value)}
-          placeholder="e.g. Visakhapatnam / Campus Hostel"
+          value={formData.location || ''}
+          onChange={(e) => handleChange('location', e.target.value)}
+          placeholder="Where are you coming from?"
           className="w-full min-h-[48px] bg-[#0d0724] border border-purple-500/30 rounded-xl px-4 py-3 text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
         />
       </div>

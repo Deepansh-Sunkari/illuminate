@@ -24,11 +24,11 @@ export function ScrollReveal({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12, margin: '0px 0px -5% 0px' }}
       transition={{
-        duration: reduceMotion ? 0 : 0.55,
+        type: "spring",
+        bounce: 0.35,
+        duration: reduceMotion ? 0 : 1.2,
         delay: reduceMotion ? 0 : delay,
-        ease: [0.16, 1, 0.3, 1],
       }}
-      style={{ willChange: 'transform, opacity' }}
     >
       {children}
     </motion.div>

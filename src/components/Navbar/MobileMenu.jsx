@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { X, ArrowRight, ExternalLink } from 'lucide-react';
 import SITE_DATA from '../../data/site';
 import EVENT_DATA from '../../data/event';
 import IlluminateLogo from '../ui/IlluminateLogo';
 
 export const MobileMenu = ({ isOpen, onClose, onRegisterClick }) => {
+  const location = useLocation();
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -25,16 +28,6 @@ export const MobileMenu = ({ isOpen, onClose, onRegisterClick }) => {
 
   if (!isOpen) return null;
 
-  const handleNavClick = (href) => {
-    onClose();
-    if (href.startsWith('#')) {
-      const el = document.querySelector(href);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
   return (
     <div
       className="fixed inset-0 z-50 lg:hidden flex flex-col justify-between"
@@ -50,12 +43,10 @@ export const MobileMenu = ({ isOpen, onClose, onRegisterClick }) => {
       />
 
       {/* Drawer Container */}
-      <div className="relative z-10 flex flex-col h-full bg-[#080417] border-l border-purple-500/20 p-6 overflow-y-auto">
+      <div className="relative z-10 flex flex-col h-full bg-[#080417] border-l border-purple-500/20 p-6 overflow-y-auto w-4/5 ml-auto">
         {/* Header with Plain Logo & Close */}
         <div className="flex items-center justify-between pb-6 border-b border-purple-900/40">
           <div className="flex items-center gap-3">
-            <IlluminateLogo size="nav" showTagline={false} showYear={false} />
-            <div className="h-4 w-[1px] bg-purple-500/30" />
             <span className="text-xs font-mono text-purple-300 font-semibold uppercase tracking-wider">
               REC × IITB
             </span>
@@ -73,19 +64,24 @@ export const MobileMenu = ({ isOpen, onClose, onRegisterClick }) => {
 
         {/* Navigation Links */}
         <nav className="flex-1 py-8 flex flex-col gap-2">
+          <Link
+            to="/"
+            onClick={onClose}
+            className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-base font-semibold transition-all min-h-[48px] ${location.pathname === '/' ? 'text-white bg-purple-900/40 border border-purple-500/30' : 'text-slate-200 hover:text-white hover:bg-purple-900/30 border border-transparent'}`}
+          >
+            <span>Home</span>
+            <ArrowRight className="w-4 h-4 text-purple-400 opacity-60" />
+          </Link>
           {SITE_DATA.navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick(link.href);
-              }}
-              className="flex items-center justify-between px-4 py-3.5 rounded-xl text-base font-semibold text-slate-200 hover:text-white hover:bg-purple-900/30 border border-transparent hover:border-purple-500/20 transition-all min-h-[48px]"
+              to={link.href}
+              onClick={onClose}
+              className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-base font-semibold transition-all min-h-[48px] ${location.pathname === link.href ? 'text-white bg-purple-900/40 border border-purple-500/30' : 'text-slate-200 hover:text-white hover:bg-purple-900/30 border border-transparent hover:border-purple-500/20'}`}
             >
               <span>{link.label}</span>
               <ArrowRight className="w-4 h-4 text-purple-400 opacity-60" />
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -95,11 +91,7 @@ export const MobileMenu = ({ isOpen, onClose, onRegisterClick }) => {
             type="button"
             onClick={() => {
               onClose();
-              if (onRegisterClick) {
-                onRegisterClick();
-              } else {
-                handleNavClick('#register');
-              }
+              if (onRegisterClick) onRegisterClick();
             }}
             className="w-full min-h-[50px] px-6 py-3 rounded-xl font-bold text-sm sm:text-base text-white bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-glow-sm flex items-center justify-center gap-2"
           >
